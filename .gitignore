@@ -1,0 +1,9 @@
+cat <<EOF > .gitignore
+# Ignorar variables de entorno
+.env
+
+# Ignorar logs generados automáticamente
+logs/
+access.log
+error.log
+EOF

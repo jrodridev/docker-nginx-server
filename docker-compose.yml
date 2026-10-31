@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_proxy
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT}:80"
+      - "${HTTPS_PORT}:443"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d        # Configuraciones de tus subdominios
+      - ./html:/usr/share/nginx/html      # Archivos web estáticos
+      - ./logs:/var/log/nginx             # Persistencia de logs
+      # Descomenta la siguiente línea cuando tengas certificados SSL configurados
+      # - ./ssl:/etc/nginx/ssl
+    environment:
+      - TZ=${TZ}
+    networks:
+      - proxy_network
+
+networks:
+  proxy_network:
+    name: proxy_network
+    driver: bridge
